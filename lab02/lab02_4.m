@@ -10,23 +10,33 @@ klasa3_train = irisInputs(:,(101:145));
 klasa3_test = irisInputs(:,(146:150));
 
 train_in = [klasa1_train, klasa2_train, klasa3_train];
-train_out = [repmat([1,-1,-1], length(klasa1_train), 1);repmat([-1,1,-1], length(klasa1_train), 1);repmat([1,-1,1], length(klasa1_train), 1)]';
+train_out = [repmat([-1,1], length(klasa1_train), 1);repmat([1,-1], length(klasa1_train), 1);repmat([1,1], length(klasa1_train), 1)]';
 
 net = linearlayer(0, 0.0001);
 net = configure(net,train_in,train_out);
-net = train(net,train_in,train_out);
-
-ytest1 = net(klasa1_test);
-ytest2 = net(klasa2_test);
-ytest3 = net(klasa3_test);
-
-for x = 1:length(klasa1_test)
-   [~,idx] = max(ytest1(:,x));
-   ytest1(idx,x) = 1;
-   [~,idx] = max(ytest2(:,x));
-   ytest2(idx,x) = 1;
-   [~,idx] = max(ytest3(:,x));
-   ytest3(idx,x) = 1;
+for i = 1 : 1
+   net = train(net,train_in,train_out); 
 end
 
-accuracy = (sum(ytest1(1,:)) + sum(ytest2(2,:)) + sum(ytest3(3,:)))/15 * 100
+
+ytest1 = round(net(klasa1_test))';
+ytest2 = round(net(klasa2_test))';
+ytest3 = round(net(klasa3_test))';
+
+ok = 0;
+
+for i=1:5
+   if ytest1(i,1) == -1 &&  ytest1(i,2) == 1
+        ok = ok + 1;
+   end
+   if ytest2(i,1) == 1 &&  ytest2(i,2) == -1
+        ok = ok + 1;
+   end
+   if ytest3(i,1) == 1 &&  ytest3(i,2) == 1
+        ok = ok + 1;
+   end
+   
+end
+
+accuracy = ok/15 * 100
+
