@@ -1,0 +1,66 @@
+[System]
+Name='lab05_2'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=14
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='czas_snu'
+Range=[0 10]
+NumMFs=7
+MF1='1-1.5h':'trimf',[-1.667 -5.551e-17 1.667]
+MF2='1.5-2.5h':'trimf',[0 1.667 3.333]
+MF3='2.5-3.5h':'trimf',[1.667 3.333 5]
+MF4='3.5-4.5h':'trimf',[3.333 5 6.667]
+MF5='4.5-5.5h':'trimf',[5 6.667 8.333]
+MF6='5.5-6.5h':'trimf',[6.667 8.333 10]
+MF7='6.5-8h':'trimf',[8.333 10 11.67]
+
+[Input2]
+Name='poziom_stresu'
+Range=[0 10]
+NumMFs=5
+MF1='wysoki':'trimf',[0 1 2]
+MF2='srednio-wysoki':'trimf',[2 3 4]
+MF3='sredni':'trimf',[4 5 6]
+MF4='srednio-niski':'trimf',[6 7 8]
+MF5='niski':'trimf',[8 9 10]
+
+[Input3]
+Name='ilosc_kaw'
+Range=[0 10]
+NumMFs=3
+MF1='mala(0-1)':'trimf',[0 0 2]
+MF2='srednia(2-3)':'trimf',[2 5 8]
+MF3='duza(4-5)':'trimf',[8 10 10]
+
+[Output1]
+Name='wydajnosc'
+Range=[0 30]
+NumMFs=3
+MF1='niska':'trimf',[0 5 10]
+MF2='srednia':'trimf',[10 15 20]
+MF3='wysoka':'trimf',[20 25 30]
+
+[Rules]
+1 1 0, 1 (1) : 2
+2 1 0, 1 (1) : 2
+3 1 0, 1 (1) : 2
+4 3 0, 2 (1) : 2
+5 3 0, 2 (1) : 2
+4 4 0, 2 (1) : 2
+5 4 0, 2 (1) : 2
+6 4 0, 2 (1) : 2
+7 5 0, 3 (1) : 2
+1 5 3, 2 (1) : 1
+5 4 2, 3 (1) : 1
+7 1 1, 2 (1) : 1
+7 5 3, 3 (1) : 1
+2 3 3, 2 (1) : 1
